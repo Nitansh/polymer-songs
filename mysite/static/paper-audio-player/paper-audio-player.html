@@ -434,6 +434,7 @@ Custom property                             | Description                       
         player.isPlaying = true;
         player.$.replay.style = '';       // remove Replay inline styling
         player._startProgressTimer();
+        this.fire('stop-loading');
       },
 
       //

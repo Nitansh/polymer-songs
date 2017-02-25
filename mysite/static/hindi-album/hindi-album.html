@@ -70,6 +70,16 @@ Polymer({
         }
 
     },
+
+    listeners: {
+        'stop-loading' : '_stopLoading' 
+    },
+
+    _stopLoading : function(event){
+        this.isLoading = false;
+        console.log("am fired");
+    },
+
     _toggleIsLoading : function(data){
         if (data){
             this.isLoading = false;
@@ -80,6 +90,7 @@ Polymer({
         this.isLoading = data;
     },
 
+
     songChnaged: function(
         data) {
 
@@ -88,9 +99,6 @@ Polymer({
         this.$['footer'].title = data.fields.song_name;
         var that = this;
         
-        setTimeout(function(){
-            that.isLoading = false;
-        },10000);
 
     }
 

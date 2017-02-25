@@ -27,16 +27,21 @@
             padding-left: 10px;
             width: 98.7%
         }
+         paper-progress.red {
+            width: 100%;
+            --paper-progress-active-color: #F05C38;
+        }
     
     </style>
     
     <template>
+        <paper-progress class="red" indeterminate disabled="{{!isLoading}}"></paper-progress>
         <iron-ajax auto url="/album/" last-response="{{data}}"
             handle-as="json">
         </iron-ajax>
         
         <template is="dom-repeat" items="{{data}}">
-            <my-album item="{{item}}" selected-song="{{selectedSong}}"></my-album>
+            <my-album item="{{item}}" is-loading="{{isLoading}}" selected-song="{{selectedSong}}"></my-album>
         </template>
         <paper-audio-player id="footer" auto-play="true" color="#F05C38"></paper-audio-player>
     </template>
@@ -47,17 +52,41 @@ Polymer({
     properties: {
         data: {
             type: String,
+            observer : '_toggleIsLoading'
         },
         selectedSong : {
             type : Object,
             observer : 'songChnaged'
+        },
+        isLoading : {
+            type : Boolean,
+            value : true,
+            observer : "_setLoading"
         }
 
     },
+    _toggleIsLoading : function(data){
+        if (data){
+            this.isLoading = false;
+        }
+    },
+
+    _setLoading : function(data){
+        this.isLoading = data;
+    },
+
     songChnaged: function(
         data) {
+
+        this.isLoading = true;
         this.$['footer'].src= data.fields.song_url;
         this.$['footer'].title = data.fields.song_name;
+        var that = this;
+        
+        setTimeout(function(){
+            that.isLoading = false;
+        },10000);
+
     }
 
 });

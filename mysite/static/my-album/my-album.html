@@ -86,11 +86,18 @@ Polymer({
         selectedSong : {
             type :Object,
             notify : true
+        },
+
+        isLoading : {
+            type : Boolean,
+            notify : true,
+            value : true,
         }
     },
 
     handleResponse: function(
         data) {
+        this.isLoading = false;
         this.$['my-song-fetcher'].url = "/album/get-songs/"+data.fields.album + "/";
     },
 

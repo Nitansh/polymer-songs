@@ -594,10 +594,19 @@ Custom property                             | Description                       
 
       _srcChanged: function(oldValue, newValue) {
         var player = this;
-
+        try {
+          player.$.audio.play();  
+        }catch(err){
+          console.log(err);
+        }
+        
         if (player.isPlaying) {
           player.$.audio.pause();
           player.$.audio.play();
+        }else{
+          setTimeout(function(){
+            player._srcChanged("","");
+          },100)
         }
       },
 

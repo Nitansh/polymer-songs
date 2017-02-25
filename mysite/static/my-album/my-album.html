@@ -61,7 +61,7 @@
             <div class="card-actions">
                 <template is="dom-repeat" items="{{data}}">
                     <div class="horizontal justified" on-tap="songTapped">
-                        <paper-button>
+                        <paper-button id="tapButton"> 
                             <iron-icon icon="av:play-circle-outline"></iron-icon>
                             &nbsp;&nbsp;{{item.fields.song_name}}</paper-button>
                     </div>

@@ -37,6 +37,10 @@
         iron-icon.star:last-of-type {
             color: var(--paper-grey-500);
         }
+
+        #tapButton {
+            width: 100%;
+        }
         </style>
         <paper-card class="myStyle">
             <div class="card-content">
@@ -56,7 +60,7 @@
             <div class="card-actions">
                 <template is="dom-repeat" items="{{data}}">
                     <div class="horizontal justified">
-                        <paper-button on-tap="songTapped">
+                        <paper-button id="tapButton" on-tap="songTapped">
                             <iron-icon icon="av:play-circle-outline"></iron-icon>
                             &nbsp;&nbsp;{{item.fields.song_name}}</paper-button>
                     </div>

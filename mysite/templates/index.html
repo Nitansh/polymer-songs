@@ -1,0 +1,42 @@
+{% load static %}
+{% load staticfiles %}
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable"
+        content="yes">
+    <title>SONGS</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Mono'
+        rel='stylesheet' type='text/css'>
+    <script src="{% static 'webcomponentsjs/webcomponents-lite.js' %}"></script>
+    <link rel="import" href="{% static 'polymer/polymer.html' %}">
+    <link rel="import" href="{% static 'paper-card/paper-card.html' %}">
+    <link rel="import" href="{% static 'iron-icons/iron-icons.html' %}">
+    <link rel="import" href="{% static 'iron-icons/communication-icons.html' %}">
+    <link rel="import" href="{% static 'iron-icons/av-icons.html' %}">
+    <link rel="import" href="{% static 'paper-icon-button/paper-icon-button.html' %}">
+    <link rel="import" href="{% static 'paper-button/paper-button.html' %}">
+    <link rel="import" href="{% static 'paper-progress/paper-progress.html' %}">
+    
+    <link rel="import" href="{% static 'my-routes/my-routes.html' %}">
+    
+    <style>
+    body {
+        margin: 0;
+        background-color: #f6f6f6;
+        font-family: 'Roboto', 'Noto', sans-serif;
+    }
+    </style>
+</head>
+
+<body unresolved>
+    
+    <my-routes></my-routes>
+    
+</body>
+
+</html>

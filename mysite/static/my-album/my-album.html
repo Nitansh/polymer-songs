@@ -1,0 +1,99 @@
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<dom-module id="my-album">
+    <template>
+        <iron-ajax id="my-song-fetcher" auto last-response="{{data}}"
+            handle-as="json"></iron-ajax>
+        <style>
+        .myStyle {
+            width: 100%;
+            height: auto;
+            margin: 10px;
+        }
+        
+        .cafe-header {
+            @apply(--paper-font-headline);
+        }
+        
+        .cafe-light {
+            color: var(--paper-grey-600);
+        }
+        
+        .cafe-location {
+            float: right;
+            font-size: 15px;
+            vertical-align: middle;
+        }
+        
+        .cafe-reserve {
+            color: var(--google-blue-500);
+        }
+        
+        iron-icon.star {
+            --iron-icon-width: 16px;
+            --iron-icon-height: 16px;
+            color: var(--paper-amber-500);
+        }
+        
+        iron-icon.star:last-of-type {
+            color: var(--paper-grey-500);
+        }
+        </style>
+        <paper-card class="myStyle">
+            <div class="card-content">
+                <div class="cafe-header">{{item.fields.album}}
+                    <div class="cafe-location cafe-light">
+                        <iron-icon icon="communication:location-on"></iron-icon>
+                    </div>
+                </div>
+                <div class="cafe-rating">
+                    <iron-icon class="star" icon="star"></iron-icon>
+                    <iron-icon class="star" icon="star"></iron-icon>
+                    <iron-icon class="star" icon="star"></iron-icon>
+                    <iron-icon class="star" icon="star"></iron-icon>
+                    <iron-icon class="star" icon="star"></iron-icon>
+                </div>
+            </div>
+            <div class="card-actions">
+                <template is="dom-repeat" items="{{data}}">
+                    <div class="horizontal justified">
+                        <paper-button on-tap="songTapped">
+                            <iron-icon icon="av:play-circle-outline"></iron-icon>
+                            &nbsp;&nbsp;{{item.fields.song_name}}</paper-button>
+                    </div>
+                </template>
+            </div>
+        </paper-card>
+    </template>
+</dom-module>
+<script>
+Polymer({
+    is: "my-album",
+    properties: {
+        item: {
+            type: Object,
+            observer: 'handleResponse'
+        },
+
+        data : {
+            type: Object,        
+        },
+
+        selectedSong : {
+            type :Object,
+            notify : true
+        }
+    },
+
+    handleResponse: function(
+        data) {
+        this.$['my-song-fetcher'].url = "/album/get-songs/"+data.fields.album + "/";
+    },
+
+
+    songTapped :  function(
+        Event){
+        this.selectedSong = Event.model.get('item');
+    }
+
+});
+</script>

@@ -1,0 +1,18 @@
+<link rel="import" href="../app-router/app-router.html">
+
+<dom-module id="my-routes">
+	<template>
+		<app-router>
+	      <!-- matches an exact path -->
+	      <app-route path="/" import="./static/hindi-album/hindi-album.html"></app-route>
+
+	    </app-router>
+	</template>
+</dom-module>
+<script>
+Polymer({
+    
+    is: "my-routes",
+
+});
+</script>

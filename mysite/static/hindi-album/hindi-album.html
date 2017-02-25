@@ -39,7 +39,7 @@
         <template is="dom-repeat" items="{{data}}">
             <my-album item="{{item}}" selected-song="{{selectedSong}}"></my-album>
         </template>
-        <paper-audio-player id="footer" color="#F05C38"></paper-audio-player>
+        <paper-audio-player id="footer" auto-play="true" color="#F05C38"></paper-audio-player>
     </template>
 </dom-module>
 <script>
@@ -59,7 +59,6 @@ Polymer({
         data) {
         this.$['footer'].src= data.fields.song_url;
         this.$['footer'].title = data.fields.song_name;
-        this.$['footer']['auto-play'] = true;
     }
 
 });

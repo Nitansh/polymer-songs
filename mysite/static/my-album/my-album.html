@@ -80,7 +80,8 @@ Polymer({
         },
 
         data : {
-            type: Object,        
+            type: Object,
+            observer : '_toggleLoading'        
         },
 
         selectedSong : {
@@ -91,13 +92,19 @@ Polymer({
         isLoading : {
             type : Boolean,
             notify : true,
-            value : true,
+            value : true
+        }
+    },
+
+    _toggleLoading : function(data){
+        if (data){
+            this.isLoading = false;    
         }
     },
 
     handleResponse: function(
         data) {
-        this.isLoading = false;
+        this.isLoading = true;
         this.$['my-song-fetcher'].url = "/album/get-songs/"+data.fields.album + "/";
     },
 

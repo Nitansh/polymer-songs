@@ -43,11 +43,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <iron-scroll-threshold id="threshold" lower-threshold="1" on-lower-trigger="loadMore" lower-triggered="{{lowerTriggered}}" fit></iron-scroll-threshold>
 
       <div id="scroller" class="vertical layout center" fill>
-
-        <template is="dom-repeat" items="{{items}}">
-          <div class="thing">{{item}}</div>
-        </template> 
-
+        <div id="scroller" class="vertical layout center" fill>
+          <template is="dom-repeat" items="{{items}}">
+            <div class="thing">{{item}}</div>
+          </template> 
+        </div>
         <div hidden?="{{!lowerTriggered}}">Please wait...</div>
       </div>
 

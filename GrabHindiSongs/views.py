@@ -9,6 +9,7 @@ from .models import HindiSongAlbum, HindiSongArtist, HindiSong
 
 # Create your views here.
 def album_view(request, page_no):
+	page_no = int(page_no);
 	all_albums = HindiSongAlbum.objects.all()[ (page_no - 1) * 4 :  page_no * 4 ]
 	posts_serialized = serializers.serialize('json', all_albums)
 	return JsonResponse( json.loads(posts_serialized) , safe=False )

@@ -3,7 +3,6 @@
 <link rel="import" href="../iron-scroll-threshold/iron-scroll-threshold.html">
 <link rel="import" href="../paper-audio-player/paper-audio-player.html">
 
-
 <dom-module is="hindi-album">
     <style is="custom-style">
     
@@ -18,7 +17,20 @@
         paper-audio-player.broken {
             --paper-audio-player-color: #43BBF9;
         }
-        
+
+        iron-scroll-threshold {
+            height: calc(100vh - 65px);
+        }
+
+        .loader {
+            background-color: #0b8043;
+            text-align: center;
+            height: 44px;
+            font: 13px arial;
+            line-height: 44px;
+            color: white;
+        }
+
         #footer {
             position: fixed;
             left: 0px;
@@ -41,18 +53,24 @@
     </style>
     
     <template>
-        <paper-progress class="red" indeterminate disabled="{{!isLoading}}"></paper-progress>
-        <iron-ajax id="getSongs" on-response="handleData"
-            handle-as="json">
-        </iron-ajax>
+            <paper-progress class="red" indeterminate disabled="{{!isLoading}}"></paper-progress>
+            <iron-ajax id="getSongs" on-response="handleData"
+                handle-as="json">
+            </iron-ajax>
 
-        <iron-scroll-threshold on-lower-threshold="loadMoreData">
-            <template is="dom-repeat" items="{{data}}">
-                <my-album item="{{item}}" is-loading="{{isLoading}}" selected-song="{{selectedSong}}"></my-album>
-            </template>
-        </iron-scroll-threshold>
-        
-        <paper-audio-player id="footer" auto-play="true" color="#F05C38"></paper-audio-player>
+            <iron-scroll-threshold
+                id="scrollThresholdForSongs"
+                lower-threshold="500"
+                on-lower-threshold="loadMoreData">
+             
+                <template is="dom-repeat" items="{{data}}">
+                    <my-album item="{{item}}" is-loading="{{isLoading}}" selected-song="{{selectedSong}}"></my-album>
+                </template>
+                <div class="loader">Fetching new Albums...</div>
+            
+            </iron-scroll-threshold>
+
+            <paper-audio-player id="footer" auto-play="true" color="#F05C38"></paper-audio-player>
     </template>
 </dom-module>
 <script>
@@ -60,7 +78,10 @@ Polymer({
     is: "hindi-album",
     properties: {
         data: {
-            type: String,
+            type: Array,
+            notify :  true,
+            value : [],
+            reflectToAttribute: true,
             observer : '_toggleIsLoading'
         },
         selectedSong : {
@@ -84,7 +105,6 @@ Polymer({
     },
 
     ready : function(){
-        this.loadMoreData();
     },
 
     _stopLoading : function(event){
@@ -102,13 +122,20 @@ Polymer({
     },
 
     loadMoreData : function(){
-        this.counter = this.counter + 1;
-        this.$.getSongs.url = '/album/' + this.counter + '/' ;
-        this.$.getSongs.generateRequest();
+
+        if (!this.$.getSongs.loading){
+            this.counter = this.counter + 1;
+            this.$.getSongs.url = '/album/' + this.counter + '/' ;
+            this.$.getSongs.generateRequest();
+        }    
+        
     },
 
     handleData : function(data){
-        this.data.push(data);
+        var myData = this.data.slice();
+        myData =  myData.concat(data.detail.response); 
+        this.set('data',myData.slice());
+        this.$.scrollThresholdForSongs.clearTriggers();
     },
 
     songChnaged: function(

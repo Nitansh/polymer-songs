@@ -42,7 +42,7 @@
     
     <template>
         <paper-progress class="red" indeterminate disabled="{{!isLoading}}"></paper-progress>
-        <iron-ajax on-response="handleData"
+        <iron-ajax id="getSongs" on-response="handleData"
             handle-as="json">
         </iron-ajax>
 

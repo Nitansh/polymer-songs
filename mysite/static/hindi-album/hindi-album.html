@@ -41,13 +41,16 @@
     
     <template>
         <paper-progress class="red" indeterminate disabled="{{!isLoading}}"></paper-progress>
-        <iron-ajax auto url="/album/" last-response="{{data}}"
+        <iron-ajax on-response="handleData"
             handle-as="json">
         </iron-ajax>
+
+        <iron-scroll-threshold on-lower-threshold="loadMoreData">
+            <template is="dom-repeat" items="{{data}}">
+                <my-album item="{{item}}" is-loading="{{isLoading}}" selected-song="{{selectedSong}}"></my-album>
+            </template>
+        </iron-scroll-threshold>
         
-        <template is="dom-repeat" items="{{data}}">
-            <my-album item="{{item}}" is-loading="{{isLoading}}" selected-song="{{selectedSong}}"></my-album>
-        </template>
         <paper-audio-player id="footer" auto-play="true" color="#F05C38"></paper-audio-player>
     </template>
 </dom-module>
@@ -63,16 +66,24 @@ Polymer({
             type : Object,
             observer : 'songChnaged'
         },
+        counter : {
+            type : int,
+            value : 0
+        },
         isLoading : {
             type : Boolean,
             value : true,
             observer : "_setLoading"
-        }
+        },
 
     },
 
     listeners: {
         'stop-loading' : '_stopLoading' 
+    },
+
+    ready : function(){
+        this.loadMoreData();
     },
 
     _stopLoading : function(event){
@@ -89,6 +100,15 @@ Polymer({
         this.isLoading = data;
     },
 
+    loadMoreData : function(){
+        this.counter = this.counter + 1;
+        this.$.getSongs.url = '/album/' + this.counter + '/' ;
+        this.$.getSongs.generateRequest();
+    },
+
+    handleData : function(data){
+        this.data.push(data);
+    },
 
     songChnaged: function(
         data) {
@@ -98,7 +118,6 @@ Polymer({
         this.$['footer'].title = data.fields.song_name;
         var that = this;
         
-
     }
 
 });

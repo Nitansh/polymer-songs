@@ -46,7 +46,7 @@
         <paper-card class="myStyle">
             <div class="card-content">
                 <div class="cafe-header">{{item.fields.album}}
-                    <div class="cafe-location cafe-light">
+                    <div on-tap="playAll" class="cafe-location cafe-light">
                         <iron-icon icon="av:playlist-play"></iron-icon>
                     </div>
                 </div>
@@ -93,7 +93,16 @@ Polymer({
             type : Boolean,
             notify : true,
             value : true
+        },
+        counter : {
+            type : Number,
+            value :0;
         }
+    },
+
+    listeners: {
+        'audio.ended'           : 'playNext',
+        'audio.error'           : 'playNext'
     },
 
     _toggleLoading : function(data){
@@ -102,15 +111,21 @@ Polymer({
         }
     },
 
-    handleResponse: function(
-        data) {
+    handleResponse: function(data) {
         this.isLoading = true;
         this.$['my-song-fetcher'].url = "/album/get-songs/"+data.fields.album + "/";
     },
 
+    playAll : function(Event){
+        this.selectedSong = data[counter];
+    },
 
-    songTapped :  function(
-        Event){
+    playNext : function(data){
+        counter = counter +  1;
+        this.playAll();
+    },
+
+    songTapped :  function(Event){
         this.selectedSong = Event.model.get('item');
     }
 

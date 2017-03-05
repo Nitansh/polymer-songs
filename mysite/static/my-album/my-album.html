@@ -121,7 +121,9 @@ Polymer({
     },
 
     playNext : function(data){
-        counter = counter +  1;
+        this.counter = this.counter +  1;
+        if (this.counter > data.length)
+            this.counter = 0;
         this.playAll();
     },
 

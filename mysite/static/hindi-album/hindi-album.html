@@ -2,6 +2,7 @@
 <link rel="import" href="../iron-ajax/iron-ajax.html">
 <link rel="import" href="../iron-scroll-threshold/iron-scroll-threshold.html">
 <link rel="import" href="../paper-audio-player/paper-audio-player.html">
+<link rel="import" href="../paper-search/paper-search-bar.html">
 
 <dom-module is="hindi-album">
     <style is="custom-style">
@@ -57,18 +58,23 @@
             <iron-ajax id="getSongs" on-response="handleData"
                 handle-as="json">
             </iron-ajax>
-
-            <iron-scroll-threshold
-                id="scrollThresholdForSongs"
-                lower-threshold="500"
-                on-lower-threshold="loadMoreData">
-             
+            
+            <paper-search-bar
+              placeholder="Search for Albums"
+              query = "{{query}}"
+              hide-filter-button="{{toggleFilter}}"
+            >
+            </paper-search-bar>
+            <iron-scroll-threshold id="scrollThresholdForSongs"
+                lower-threshold="500" on-lower-threshold="loadMoreData">
                 <template is="dom-repeat" items="{{data}}">
-                    <my-album item="{{item}}" is-loading="{{isLoading}}" selected-song="{{selectedSong}}"></my-album>
+                    <my-album item="{{item}}" is-loading="{{isLoading}}"
+                        selected-song="{{selectedSong}}"></my-album>
                 </template>
                 <div class="loader">Fetching new Albums...</div>
-            
             </iron-scroll-threshold>
+
+            
 
             <paper-audio-player id="footer" auto-play="true" color="#F05C38"></paper-audio-player>
     </template>
@@ -97,11 +103,19 @@ Polymer({
             value : true,
             observer : "_setLoading"
         },
-
+        toggleFilter : {
+            type : Boolean,
+            value : true,
+        },
+        query : {
+            type : String,
+            value : '',
+            observer : 'searchData'
+        }
     },
 
     listeners: {
-        'stop-loading' : '_stopLoading' 
+        'stop-loading' : '_stopLoading',
     },
 
     ready : function(){
@@ -117,6 +131,12 @@ Polymer({
         }
     },
 
+    searchData : function(){
+        this.counter = 0;
+        this.set('data',[]);
+        this.loadMoreData();
+    },
+
     _setLoading : function(data){
         this.isLoading = data;
     },
@@ -125,7 +145,7 @@ Polymer({
 
         if (!this.$.getSongs.loading){
             this.counter = this.counter + 1;
-            this.$.getSongs.url = '/album/' + this.counter + '/' ;
+            this.$.getSongs.url = '/album/' + this.counter + '/' + this.query + '/';
             this.$.getSongs.generateRequest();
             this.isLoading = true;
         }    
@@ -139,14 +159,12 @@ Polymer({
         this.$.scrollThresholdForSongs.clearTriggers();
     },
 
-    songChnaged: function(
-        data) {
+    songChnaged: function(data) {
 
         this.isLoading = true;
         this.$['footer'].src= data.fields.song_url;
         this.$['footer'].title = data.fields.song_name;
-        var that = this;
-        
+    
     }
 
 });

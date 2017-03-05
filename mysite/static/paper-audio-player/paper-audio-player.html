@@ -502,6 +502,10 @@ Custom property                             | Description                       
         player.ended = true;
         player.isPlaying = false;
         player.$.replay.style.opacity = 1;    // display Replay icon
+        this.fire('song-ended',{
+          node: Polymer.dom(this.root).querySelectorAll('my-album'),
+          bubbles: false
+        });
       },
 
 

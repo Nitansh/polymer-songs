@@ -68,8 +68,11 @@
             <iron-scroll-threshold id="scrollThresholdForSongs"
                 lower-threshold="500" on-lower-threshold="loadMoreData">
                 <template is="dom-repeat" items="{{data}}">
-                    <my-album item="{{item}}" is-loading="{{isLoading}}"
-                        selected-song="{{selectedSong}}"></my-album>
+                    <my-album change="{{change}}"
+                              item="{{item}}" 
+                              is-loading="{{isLoading}}"
+                              selected-song="{{selectedSong}}">
+                    </my-album>
                 </template>
                 <div class="loader">Fetching new Albums...</div>
             </iron-scroll-threshold>
@@ -111,14 +114,28 @@ Polymer({
             type : String,
             value : '',
             observer : 'searchData'
+        },
+        change : {
+            type : Number,
+            value : 0
+        },
+        activatedAlbum : {
+            type : String,
+            notify : true
         }
     },
 
     listeners: {
         'stop-loading' : '_stopLoading',
+        'song-ended' : 'check'
     },
 
     ready : function(){
+    },
+
+    check : function(event){
+        this.change = this.change + 1;
+        console.log(this.change);
     },
 
     _stopLoading : function(event){

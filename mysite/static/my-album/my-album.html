@@ -97,12 +97,11 @@ Polymer({
         counter : {
             type : Number,
             value :0
+        },
+        change : {
+            type : Number,
+            observer : 'playNext'
         }
-    },
-
-    listeners: {
-        'audio.ended'           : 'playNext',
-        'audio.error'           : 'playNext'
     },
 
     _toggleLoading : function(data){
@@ -117,19 +116,24 @@ Polymer({
     },
 
     playAll : function(Event){
+        var that = this;
+        this.counter = 0;
         this.selectedSong = this.data[this.counter];
+        window.activatedAlbum = this.item.fields.album;
     },
 
-    playNext : function(data){
-        this.counter = this.counter +  1;
-        if (this.counter > this.data.length)
-            this.counter = 0;
-        this.playAll();
+    playNext : function(Event){
+        if (window.activatedAlbum === this.item.fields.album){
+            this.counter = this.counter +  1;
+            if (this.counter > this.data.length)
+                this.counter = 0;
+           this.selectedSong = this.data[this.counter];
+        }
     },
 
     songTapped :  function(Event){
         this.selectedSong = Event.model.get('item');
-    }
+    },
 
 });
 </script>

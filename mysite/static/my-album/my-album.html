@@ -117,12 +117,12 @@ Polymer({
     },
 
     playAll : function(Event){
-        this.selectedSong = data[counter];
+        this.selectedSong = this.data[counter];
     },
 
     playNext : function(data){
         this.counter = this.counter +  1;
-        if (this.counter > data.length)
+        if (this.counter > this.data.length)
             this.counter = 0;
         this.playAll();
     },

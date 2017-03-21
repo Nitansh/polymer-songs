@@ -170,9 +170,8 @@ Polymer({
     },
 
     handleData : function(data){
-        var myData = this.data.slice();
-        myData =  myData.concat(data.detail.response); 
-        this.set('data',myData.slice());
+        myData =  this.data.concat(data.detail.response); 
+        this.set('data',myData);
         this.$.scrollThresholdForSongs.clearTriggers();
     },
 

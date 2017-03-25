@@ -5,11 +5,13 @@ from django.db import models
 # Create your models here.
 class HindiSongArtist(models.Model):
 	artist = models.TextField()
+	artist_type = models.TextField(); 
 	def __unicode__(self):
 		return self.artist 
 
 class HindiSongAlbum(models.Model):
 	album = models.TextField()
+	album_type = models.TextField();
 	def __unicode__(self):
 		return self.album 
 

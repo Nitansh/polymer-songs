@@ -45,14 +45,14 @@ def fetch_page(page_no):
         
         print album.a.contents[0],
         
-        new_album = HindiSongAlbum.objects.create(album=album.a.contents[0].strip())
+        new_album = HindiSongAlbum.objects.create(album=album.a.contents[0].strip(),album_type='hindi')
         
         try :
             
             web_page  = urllib2.urlopen( url_base + album_url ).read()
             soup = BeautifulSoup(web_page)
             all_songs = soup.findAll("p", { "class" : "dj" })
-            
+            print ("-----------------p.no:"+str(page_no)+"--------")
             for song in all_songs[1:] :
                 try :
                     song_url = song.a['href']
@@ -67,7 +67,7 @@ def fetch_page(page_no):
                     try :
                         new_artist = HindiSongArtist.objects.get(artist=artist)
                     except : 
-                        new_artist = HindiSongArtist.objects.create(artist=artist.strip())
+                        new_artist = HindiSongArtist.objects.create(artist=artist.strip(),artist_type='hindi')
 
                     new_song = ''
                     new_song  = HindiSong.objects.create(song_name=song.a.contents[0].strip(),song_url=all_songs[2].a['href'])
@@ -81,4 +81,12 @@ def fetch_page(page_no):
                 except Exception as e:
                     print(str(e) )   
         except Exception as e:
-            print 'completed of page :'            
+            print 'completed of page :' 
+
+if __name__ == '__main__':
+    for i in xrange(155):
+        fetch_page(155-i)
+
+
+
+          

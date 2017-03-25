@@ -15,7 +15,7 @@ from .models import HindiSongAlbum, HindiSongArtist, HindiSong
 def album_view(request, page_no, query):
 	page_no = int(page_no);
 	if not query :
-		all_albums = HindiSongAlbum.objects.all()[ (page_no - 1) * 4 :  page_no * 4 ]
+		all_albums = HindiSongAlbum.objects.all()[ -((page_no - 1) * 4) :  -(page_no * 4) ]
 	else :
 		all_albums = HindiSongAlbum.objects.filter(Q(album__icontains=query))[ (page_no - 1) * 4 :  page_no * 4 ]
 

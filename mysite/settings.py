@@ -141,4 +141,4 @@ DATABASES['default'].update(db_from_env)
 
 CELERY_RESULT_BACKEND = 'django-db'
 
-CELERY_RESULT_BACKEND = 'django-cache'
+CELERY_RESULT_BROKER = 'django-cache'

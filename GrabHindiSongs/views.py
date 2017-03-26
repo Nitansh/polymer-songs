@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.forms.models import model_to_dict
 from django.core import serializers
 from django.db.models import Q
+from django.core.exceptions import MultipleObjectsReturned
 
 from .models import HindiSongAlbum, HindiSongArtist, HindiSong
 
@@ -34,14 +35,23 @@ def artist_view(request, page_no, query):
 
 
 def song_view(request, album_name):
-	fetched_album = HindiSongAlbum.objects.get(album=str(album_name))
+	fetched_album = ''
+	try : 
+		fetched_album = HindiSongArtist.objects.get(artist=str(album_name))
+	except MultipleObjectsReturned:
+		fetched_album = HindiSongArtist.objects.get(artist=str(album_name))[0]
 	all_songs = HindiSong.objects.filter(album=fetched_album.id)
 	posts_serialized = serializers.serialize('json', all_songs)
 	return JsonResponse( json.loads(posts_serialized) , safe=False )
 
 
 def song_artist_view(request, album_name):
-	fetched_album = HindiSongArtist.objects.get(artist=str(album_name))
+	fetched_album = ''
+	try : 
+		fetched_album = HindiSongArtist.objects.get(artist=str(album_name))
+	except MultipleObjectsReturned:
+		fetched_album = HindiSongArtist.objects.get(artist=str(album_name))[0]
+
 	all_songs = HindiSong.objects.filter(artist=fetched_album.id)
 	posts_serialized = serializers.serialize('json', all_songs)
 	return JsonResponse( json.loads(posts_serialized) , safe=False )

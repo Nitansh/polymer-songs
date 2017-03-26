@@ -36,10 +36,11 @@ def artist_view(request, page_no, query):
 
 def song_view(request, album_name):
 	fetched_album = ''
-	try : 
-		fetched_album = HindiSongArtist.objects.get(artist=str(album_name))
+	try :
+		fetched_album = HindiSongAlbum.objects.get(album=str(album_name))
 	except MultipleObjectsReturned:
-		fetched_album = HindiSongArtist.objects.get(artist=str(album_name))[0]
+		fetched_album = HindiSongAlbum.objects.get(album=str(album_name))[0]
+		
 	all_songs = HindiSong.objects.filter(album=fetched_album.id)
 	posts_serialized = serializers.serialize('json', all_songs)
 	return JsonResponse( json.loads(posts_serialized) , safe=False )

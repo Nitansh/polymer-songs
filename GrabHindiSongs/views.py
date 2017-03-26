@@ -61,8 +61,16 @@ def song_artist_view(request, album_name):
 	try : 
 		fetched_album = HindiSongArtist.objects.get(artist=str(album_name))
 	except MultipleObjectsReturned:
-		fetched_album = HindiSongArtist.objects.filter(artist=str(album_name)).order_by('-id').first()
+		fetched_result = HindiSongArtist.objects.filter(album=str(album_name))
+		if my_duplicate.get(album_name) :
+			my_duplicate[album_name]['ctr'] = my_duplicate[album_name]['ctr'] + 1; 
+			if my_duplicate[album_name]['ctr'] == my_duplicate[album_name]['max']:
+				my_duplicate[album_name]['ctr'] = 0 
+		else : 
+			my_duplicate[album_name] = {}
+			my_duplicate[album_name]['max'] = len(fetched_result)
+			my_duplicate[album_name]['ctr'] = 0
 
-	all_songs = HindiSong.objects.filter(artist=fetched_album.id)
+	all_songs = HindiSong.objects.filter(artist=fetched_album.id)[my_duplicate[album_name]['ctr']]
 	posts_serialized = serializers.serialize('json', all_songs)
 	return JsonResponse( json.loads(posts_serialized) , safe=False )

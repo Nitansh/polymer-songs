@@ -26,7 +26,7 @@ SECRET_KEY = 's(x&jvcuzi05@m1(v^^0f^(=tz!=z8ab)%gx7#879u0m+70bu^'
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['polymer-songs.herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = ['polymer-songs.herokuapp.com','127.0.0.1','trancesongs.net','www.trancesongs.net']
 
 
 # Application definition

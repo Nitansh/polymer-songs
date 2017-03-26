@@ -35,41 +35,25 @@ def artist_view(request, page_no, query):
 
 
 def song_view(request, album_name):
-	fetched_album = ''
-	try :
-		fetched_album = HindiSongAlbum.objects.get(album=str(album_name))
-	except MultipleObjectsReturned:
-		fetched_result = HindiSongAlbum.objects.filter(album=str(album_name))
-		if my_duplicate.get(album_name) :
-			my_duplicate[album_name]['ctr'] = my_duplicate[album_name]['ctr'] + 1; 
-			if my_duplicate[album_name]['ctr'] == my_duplicate[album_name]['max']:
-				my_duplicate[album_name]['ctr'] = 0 
-		else : 
-			my_duplicate[album_name] = {}
-			my_duplicate[album_name]['max'] = len(fetched_result)
-			my_duplicate[album_name]['ctr'] = 0
-		 
-		fetched_album = HindiSongAlbum.objects.filter(album=str(album_name))[my_duplicate[album_name]['ctr']]
-
-	all_songs = HindiSong.objects.filter(album=fetched_album.id)
+	all_songs = HindiSong.objects.filter(album=album_name)
 	posts_serialized = serializers.serialize('json', all_songs)
 	return JsonResponse( json.loads(posts_serialized) , safe=False )
 
 
 def song_artist_view(request, album_name):
-	fetched_album = ''
-	try : 
-		fetched_album = HindiSongArtist.objects.get(artist=str(album_name))
-	except MultipleObjectsReturned:
-		fetched_result = HindiSongArtist.objects.filter(album=str(album_name))
-		if my_duplicate.get(album_name) :
-			my_duplicate[album_name]['ctr'] = my_duplicate[album_name]['ctr'] + 1; 
-			if my_duplicate[album_name]['ctr'] == my_duplicate[album_name]['max']:
-				my_duplicate[album_name]['ctr'] = 0 
-		else : 
-			my_duplicate[album_name] = {}
-			my_duplicate[album_name]['max'] = len(fetched_result)
-			my_duplicate[album_name]['ctr'] = 0
+	# fetched_album = ''
+	# try : 
+	fetched_album = HindiSongArtist.objects.get(artist=str(album_name))
+	# except MultipleObjectsReturned:
+	# 	fetched_result = HindiSongArtist.objects.filter(album=str(album_name))
+	# 	if my_duplicate.get(album_name) :
+	# 		my_duplicate[album_name]['ctr'] = my_duplicate[album_name]['ctr'] + 1; 
+	# 		if my_duplicate[album_name]['ctr'] == my_duplicate[album_name]['max']:
+	# 			my_duplicate[album_name]['ctr'] = 0 
+	# 	else : 
+	# 		my_duplicate[album_name] = {}
+	# 		my_duplicate[album_name]['max'] = len(fetched_result)
+	# 		my_duplicate[album_name]['ctr'] = 0
 
 	all_songs = HindiSong.objects.filter(artist=fetched_album.id)[my_duplicate[album_name]['ctr']]
 	posts_serialized = serializers.serialize('json', all_songs)

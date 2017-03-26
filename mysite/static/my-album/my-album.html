@@ -112,7 +112,7 @@ Polymer({
 
     handleResponse: function(data) {
         this.isLoading = true;
-        this.$['my-song-fetcher'].url = "/album/get-songs/"+data.fields.album + "/";
+        this.$['my-song-fetcher'].url = "/album/get-songs/"+data.pk + "/";
     },
 
     playAll : function(Event){

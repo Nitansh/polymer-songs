@@ -39,7 +39,7 @@ def song_view(request, album_name):
 	try :
 		fetched_album = HindiSongAlbum.objects.get(album=str(album_name))
 	except MultipleObjectsReturned:
-		fetched_album = HindiSongAlbum.objects.latest(album=str(album_name))
+		fetched_album = HindiSongAlbum.objects.filter(album=str(album_name))[-1]
 
 	all_songs = HindiSong.objects.filter(album=fetched_album.id)
 	posts_serialized = serializers.serialize('json', all_songs)
@@ -51,7 +51,7 @@ def song_artist_view(request, album_name):
 	try : 
 		fetched_album = HindiSongArtist.objects.get(artist=str(album_name))
 	except MultipleObjectsReturned:
-		fetched_album = HindiSongArtist.objects.latest(artist=str(album_name))
+		fetched_album = HindiSongArtist.objects.filter(artist=str(album_name))[-1]
 
 	all_songs = HindiSong.objects.filter(artist=fetched_album.id)
 	posts_serialized = serializers.serialize('json', all_songs)

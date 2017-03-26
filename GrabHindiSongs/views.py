@@ -42,7 +42,7 @@ def song_view(request, album_name):
 		fetched_result = HindiSongAlbum.objects.filter(album=str(album_name))
 		if my_duplicate.get(album_name) :
 			my_duplicate[album_name]['ctr'] = my_duplicate[album_name]['ctr'] + 1; 
-			if my_duplicate[album_name]['ctr'] == my_duplicate[album_name]['max']
+			if my_duplicate[album_name]['ctr'] == my_duplicate[album_name]['max']:
 				my_duplicate[album_name]['ctr'] = 0 
 		else : 
 			my_duplicate[album_name] = {}

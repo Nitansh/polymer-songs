@@ -10,7 +10,7 @@ from django.core.exceptions import MultipleObjectsReturned
 from .models import HindiSongAlbum, HindiSongArtist, HindiSong
 
 
-
+my_duplicate = {}
 
 # Create your views here.
 def album_view(request, page_no, query):
@@ -39,7 +39,17 @@ def song_view(request, album_name):
 	try :
 		fetched_album = HindiSongAlbum.objects.get(album=str(album_name))
 	except MultipleObjectsReturned:
-		fetched_album = HindiSongAlbum.objects.filter(album=str(album_name)).order_by('-id').first()
+		fetched_result = HindiSongAlbum.objects.filter(album=str(album_name))
+		if my_duplicate.get(album_name) :
+			my_duplicate[album_name]['ctr'] = my_duplicate[album_name]['ctr'] + 1; 
+			if my_duplicate[album_name]['ctr'] == my_duplicate[album_name]['max']
+				my_duplicate[album_name]['ctr'] = 0 
+		else : 
+			my_duplicate[album_name] = {}
+			my_duplicate[album_name]['max'] = len(fetched_result)
+			my_duplicate[album_name]['ctr'] = 0
+		 
+		fetched_album = HindiSongAlbum.objects.filter(album=str(album_name))[my_duplicate[album_name]['ctr']]
 
 	all_songs = HindiSong.objects.filter(album=fetched_album.id)
 	posts_serialized = serializers.serialize('json', all_songs)

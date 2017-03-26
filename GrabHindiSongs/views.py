@@ -9,9 +9,6 @@ from django.core.exceptions import MultipleObjectsReturned
 
 from .models import HindiSongAlbum, HindiSongArtist, HindiSong
 
-
-my_duplicate = {}
-
 # Create your views here.
 def album_view(request, page_no, query):
 	page_no = int(page_no);
@@ -40,21 +37,7 @@ def song_view(request, album_name):
 	return JsonResponse( json.loads(posts_serialized) , safe=False )
 
 
-def song_artist_view(request, album_name):
-	# fetched_album = ''
-	# try : 
-	fetched_album = HindiSongArtist.objects.get(artist=str(album_name))
-	# except MultipleObjectsReturned:
-	# 	fetched_result = HindiSongArtist.objects.filter(album=str(album_name))
-	# 	if my_duplicate.get(album_name) :
-	# 		my_duplicate[album_name]['ctr'] = my_duplicate[album_name]['ctr'] + 1; 
-	# 		if my_duplicate[album_name]['ctr'] == my_duplicate[album_name]['max']:
-	# 			my_duplicate[album_name]['ctr'] = 0 
-	# 	else : 
-	# 		my_duplicate[album_name] = {}
-	# 		my_duplicate[album_name]['max'] = len(fetched_result)
-	# 		my_duplicate[album_name]['ctr'] = 0
-
-	all_songs = HindiSong.objects.filter(artist=fetched_album.id)[my_duplicate[album_name]['ctr']]
+def song_artist_view(request, album_name):	
+	all_songs = HindiSong.objects.filter(artist=album_name)
 	posts_serialized = serializers.serialize('json', all_songs)
 	return JsonResponse( json.loads(posts_serialized) , safe=False )

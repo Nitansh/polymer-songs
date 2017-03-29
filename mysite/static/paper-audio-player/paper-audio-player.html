@@ -64,7 +64,8 @@ Custom property                             | Description                       
       }
 
       #left,
-      #right {
+      #right,
+      #downloadDiv {
         height: 50px;
         width: 50px;
         position: relative;
@@ -134,6 +135,13 @@ Custom property                             | Description                       
         transform-origin: left;
         transform: scaleX(0);
         background-color: var(--paper-audio-player-color, blueviolet);
+      }
+
+      #download {
+        color : #f05c38;
+        height: 60px;
+        width: 60px;
+        margin-left: -5px; 
       }
 
       paper-ripple {
@@ -267,6 +275,15 @@ Custom property                             | Description                       
                            tabindex="-1"
                            role="button"
                            aria-label="Replay Audio"></paper-icon-button>
+      </div>
+      <div id="downloadDiv"
+           class="self-end"
+           on-click="download">
+      <paper-icon-button id="download"
+                           class="fit"
+                           icon="paper-audio-icons:download"
+                           role="button"
+                           aria-label="Download Audio"></paper-icon-button>
       </div>
     </div>
   </template>
@@ -404,6 +421,15 @@ Custom property                             | Description                       
         if ( !player.isPlaying ) player.$.audio.play();
       },
 
+      download: function(e){
+        if (!!e) e.preventDefault();
+        var player = this;
+        if (this.src){
+          player.$.audio.currentTime = 0;
+          window.open(this.src);  
+        }
+      },
+
 
       // when audio file can be played in user's browser
 
@@ -433,6 +459,7 @@ Custom property                             | Description                       
         player.ended = false;
         player.isPlaying = true;
         player.$.replay.style = '';       // remove Replay inline styling
+        player.$.download.opacity = 1;
         player._startProgressTimer();
         this.fire('stop-loading');
       },
@@ -502,6 +529,7 @@ Custom property                             | Description                       
         player.ended = true;
         player.isPlaying = false;
         player.$.replay.style.opacity = 1;    // display Replay icon
+        player.$.download.opacity = 0;
         this.fire('song-ended',{
           node: Polymer.dom(this.root).querySelectorAll('my-album'),
           bubbles: false

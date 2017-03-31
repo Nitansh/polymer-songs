@@ -83,9 +83,6 @@ def fetch_page(page_no):
 
                     all_songs = soup(text=re.compile(r'Download In 128 Kbps'))
 
-
-                    
-
                     artist = song.a.span.contents[0] if song.a.span is not None else song.span.contents[0] if song.span is not None else 'NA'  
                     new_artist = ''
                     try :

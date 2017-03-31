@@ -17,8 +17,11 @@ def album_view(request, page_no, query):
 	else :
 		all_albums = HindiSongAlbum.objects.filter(Q(album__icontains=query))[ (page_no - 1) * 4 :  page_no * 4 ]
 
-	posts_serialized = serializers.serialize('json', all_albums)
-	return JsonResponse( json.loads(posts_serialized) , safe=False )
+	if len(all_albums) == 0 :
+		posts_serialized = [ {"fields" : { "album" : "we find following songs for you :)"}}]
+	else :
+		posts_serialized = json.loads( serializers.serialize('json', all_albums) )
+	return JsonResponse( posts_serialized , safe=False )
 
 def artist_view(request, page_no, query):
 	page_no = int(page_no);
@@ -31,8 +34,12 @@ def artist_view(request, page_no, query):
 	return JsonResponse( json.loads(posts_serialized) , safe=False )
 
 
-def song_view(request, album_name):
-	all_songs = HindiSong.objects.filter(album=album_name)
+def song_view(request, album_name, query):
+	if album_name == 'search': 
+		all_songs = HindiSong.objects.filter(Q(song_name__icontains=query))
+	else :
+		all_songs = HindiSong.objects.filter(album=album_name)
+		
 	posts_serialized = serializers.serialize('json', all_songs)
 	return JsonResponse( json.loads(posts_serialized) , safe=False )
 

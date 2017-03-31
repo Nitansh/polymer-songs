@@ -101,6 +101,18 @@ Polymer({
         change : {
             type : Number,
             observer : 'playNext'
+        },
+        query : {
+            type : String,
+            observer : 'fetchSearchResult'
+        }
+    },
+    fetchSearchResult : function(data){
+        this.isLoading = true;
+        if ( !this.item.pk && !this.$['my-song-fetcher'].loading){
+                this.$['my-song-fetcher'].url = "/album/get-songs/search/" + this.query + "/";
+        }else{
+            this.isLoading = false;
         }
     },
 
@@ -112,7 +124,14 @@ Polymer({
 
     handleResponse: function(data) {
         this.isLoading = true;
-        this.$['my-song-fetcher'].url = "/album/get-songs/"+data.pk + "/";
+        if (!this.query){
+            this.query = '';
+            this.$['my-song-fetcher'].url = "/album/get-songs/"+data.pk + "/" + this.query + "/";
+        }
+        else{
+            this.isLoading = false;
+        }
+        
     },
 
     playAll : function(Event){

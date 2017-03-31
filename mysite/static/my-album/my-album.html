@@ -110,7 +110,7 @@ Polymer({
     fetchSearchResult : function(data){
         this.isLoading = true;
         if ( !this.item.pk && !this.$['my-song-fetcher'].loading){
-                this.$['my-song-fetcher'].url = "/album/get-songs/search/" + this.query + "/";
+                this.$['my-song-fetcher'].url = "/" + window.albumType + "/get-songs/search/" + this.query + "/";
         }else{
             this.isLoading = false;
         }
@@ -124,9 +124,9 @@ Polymer({
 
     handleResponse: function(data) {
         this.isLoading = true;
-        if (!this.query){
+        if (!this.query && data.pk){
             this.query = '';
-            this.$['my-song-fetcher'].url = "/album/get-songs/"+data.pk + "/" + this.query + "/";
+            this.$['my-song-fetcher'].url = "/" + window.albumType + "/get-songs/"+data.pk + "/" + this.query + "/";
         }
         else{
             this.isLoading = false;

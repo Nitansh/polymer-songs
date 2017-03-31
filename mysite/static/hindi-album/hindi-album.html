@@ -173,7 +173,7 @@ Polymer({
 
         if (!this.$.getSongs.loading){
             this.counter = this.counter + 1;
-            this.$.getSongs.url = '/album/' + this.counter + '/' + this.query + '/';
+            this.$.getSongs.url = '/' + window.albumType + '/' + this.counter + '/' + this.query + '/';
             this.$.getSongs.generateRequest();
             this.isLoading = true;
         }    

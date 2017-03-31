@@ -20,10 +20,9 @@ from django.conf.urls.static import static
 
 from .views import home_view
 
-
-
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',home_view),
-    url(r'^album/', include('GrabHindiSongs.urls')),
+    url(r'^albumHindi/', include('GrabHindiSongs.urls')),
+    url(r'^albumPanjabi/', include('GrabPanjabiSongs.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

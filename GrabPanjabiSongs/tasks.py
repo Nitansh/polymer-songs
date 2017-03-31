@@ -48,6 +48,8 @@ def fetch_page(page_no):
     for album in all_albums:
         album_url = album.a['href']
         
+        print album.a.contents[0],
+        
         new_album = PanjabiSongAlbum.objects.create(album=album.a.contents[0].strip(),album_type='hindi')
         
         try :

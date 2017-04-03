@@ -1,0 +1,96 @@
+{% load static %}
+{% load staticfiles %}
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable"
+        content="yes">
+    <title>Hindi SONGS ..</title>
+    <meta name="Description" content="Bollywood Movies Songs">
+
+    <meta name="KeyWords" content="Raaes Songs, all movies songs">
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Mono'
+        rel='stylesheet' type='text/css'>
+    <script src="{% static 'webcomponentsjs/webcomponents-lite.js' %}"></script>
+    <link rel="import" href="{% static 'polymer/polymer.html' %}">
+    <link rel="import" href="{% static 'paper-card/paper-card.html' %}">
+    <link rel="import" href="{% static 'iron-icons/iron-icons.html' %}">
+    <link rel="import" href="{% static 'iron-icons/communication-icons.html' %}">
+    <link rel="import" href="{% static 'iron-icons/av-icons.html' %}">
+    <link rel="import" href="{% static 'paper-icon-button/paper-icon-button.html' %}">
+    <link rel="import" href="{% static 'paper-button/paper-button.html' %}">
+    <link rel="import" href="{% static 'paper-progress/paper-progress.html' %}">
+    
+    <style>
+    body {
+        margin: 0;
+        background-color: #f6f6f6;
+        font-family: 'Roboto', 'Noto', sans-serif;
+    }
+    html {
+            -webkit-transition: background-color 1s;
+            transition: background-color 1s;
+        }
+    html, body {
+        /* For the loading indicator to be vertically centered ensure */
+        /* the html and body elements take up the full viewport */
+        min-height: 100%;
+    }
+    html.loading {
+        /* Replace #333 with the background-color of your choice */
+        /* Replace loading.gif with the loading image of your choice */
+        background: #333 url('/static/images/ajax-loader.gif') no-repeat 50% 50%;
+
+        /* Ensures that the transition only runs in one direction */
+        -webkit-transition: background-color 0;
+        transition: background-color 0;
+    }
+    body {
+        -webkit-transition: opacity 1s ease-in;
+        transition: opacity 1s ease-in;
+    }
+    html.loading body {
+        /* Make the contents of the body opaque during loading */
+        opacity: 0;
+
+        /* Ensures that the transition only runs in one direction */
+        -webkit-transition: opacity 0;
+        transition: opacity 0;
+    }
+    </style>
+    <script>
+        window.albumType = 'albumHindi';
+    </script>
+</head>
+
+<body unresolved>
+
+   
+
+    {% for key, values in context.items %}
+        <ul>{{key}}
+        {% for v in values %}
+        <li>{{v}}</li>
+        {% endfor %}
+        </ul>
+    {% endfor %}
+</table>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-96197895-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+</body>
+
+</html>

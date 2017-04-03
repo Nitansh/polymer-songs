@@ -19,11 +19,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
 
-from .views import home_view
+from .views import home_view,google_view
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',home_view),
+    url(r'^google$',google_view),
     url(r'^albumHindi/', include('GrabHindiSongs.urls')),
     url(r'^albumPanjabi/', include('GrabPanjabiSongs.urls')),
     url(r'^robots.txt$', TemplateView.as_view(template_name="robots.txt", content_type="text/plain"), name="robots_file"),

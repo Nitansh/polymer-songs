@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_celery_results',
-    'django.contrib.sitemaps',
     'mysite',
     'GrabHindiSongs',
     'GrabPanjabiSongs',
@@ -145,7 +144,7 @@ STATICFILES_DIRS = (
 )
 
 import dj_database_url
-# DATABASES['default'] = dj_database_url.config()
+DATABASES['default'] = dj_database_url.config()
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 

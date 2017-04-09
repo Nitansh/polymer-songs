@@ -32,9 +32,7 @@
             color: white;
         }
 
-        .in-mobi-ad-slot{
-            height: 90px;
-        }
+        
 
         #footer {
             position: fixed;
@@ -72,17 +70,6 @@
             <iron-scroll-threshold id="scrollThresholdForSongs"
                 lower-threshold="500" on-lower-threshold="loadMoreData">
                 
-                <div class="in-mobi-ad-slot">
-                <script type="text/javascript">
-                    var inmobi_conf = {
-                    siteid : "58624bd61e6440f585e0e540f73d952d",
-                    slot : "15",
-                    autoRefresh: 60
-                };
-                </script>
-                <script type="text/javascript" src="http://cf.cdn.inmobi.com/ad/inmobi.js"></script>
-                </div>
-
                 <template is="dom-repeat" items="{{data}}">
                     <my-album change="{{change}}"
                               item="{{item}}" 

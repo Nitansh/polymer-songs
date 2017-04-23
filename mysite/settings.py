@@ -90,8 +90,12 @@ CACHES = {
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'songs',
+        'USER': 'postgres',
+        'PASSWORD': 'b@r3j@',
+        'HOST': '35.164.159.59',
+        'PORT': '5432',
     }
 }
 
@@ -144,7 +148,7 @@ STATICFILES_DIRS = (
 )
 
 import dj_database_url
-DATABASES['default'] = dj_database_url.config()
+# DATABASES['default'] = dj_database_url.config()
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 

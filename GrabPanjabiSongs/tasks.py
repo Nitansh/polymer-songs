@@ -28,7 +28,6 @@ url_base  = "http://djpunjab.com"
 
 url_base_hindi = "/punjabi_music/latest.php" 
 
-@app.task
 def fetch_page(page_no):
     page_url = "%s%s?page=%d"%(url_base,url_base_hindi,page_no)
 
@@ -103,11 +102,4 @@ def fetch_page(page_no):
                     print(str(e) )   
         except Exception as e:
             print 'completed of page :' + str(e)
-
-if __name__ == '__main__':
-    for i in xrange(155):
-        fetch_page(155-i)
-
-
-
           

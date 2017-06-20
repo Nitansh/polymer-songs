@@ -17,47 +17,21 @@
 </head>
 
 <body unresolved>
-
 <div class="container">
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th>ALBUMS</th>
+          <th>{{album.album}}</th>
         </tr>
       </thead>
       <tbody>
-        {% for album in albums %}
+        {% for song in songs %}
           <tr>
-            <td><a href="/albumHindi/get-songs-template/{{album.id}}">{{ album.album }}</a></td>
+            <td><a href="{{song.song_url}}">{{ song.song_name }}</a> {{songs.artist.artist}}</td>
           </tr>
         {% endfor %}
       </tbody>
     </table>
-
-{% if is_paginated %}
-<nav aria-label="pagination">
-  <ul class="pagination pagination-responsive pagination-lg">
-    {% if page_obj.has_previous %}
-      <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
-    {% else %}
-      <li class="disabled"><span>&laquo;</span></li>
-    {% endif %}
-    {% for i in paginator.page_range %}
-      {% if page_obj.number == i %}
-        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-      {% else %}
-        <li><a href="?page={{ i }}">{{ i }}</a></li>
-      {% endif %}
-    {% endfor %}
-    {% if page_obj.has_next %}
-      <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
-    {% else %}
-      <li class="disabled"><span>&raquo;</span></li>
-    {% endif %}
-  </ul>
-</nav>
-
-{% endif %}
 </div>
 <script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
@@ -65,5 +39,4 @@
   crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
-
-</html>
+<html>

@@ -23,6 +23,7 @@ def album_view(request, page_no, query):
 		posts_serialized = json.loads( serializers.serialize('json', all_albums) )
 	return JsonResponse( posts_serialized , safe=False )
 
+
 def artist_view(request, page_no, query):
 	page_no = int(page_no);
 	if not query :
@@ -43,6 +44,15 @@ def song_view(request, album_name, query):
 	posts_serialized = serializers.serialize('json', all_songs)
 	return JsonResponse( json.loads(posts_serialized) , safe=False )
 
+def song_view_template(request, album_name):
+	if album_name == 'search': 
+		all_songs = HindiSong.objects.filter(Q(song_name__icontains=query))
+	else :
+		all_songs = HindiSong.objects.filter(album=album_name)
+
+	album = HindiSongAlbum.objects.get(pk=album_name)
+
+	return render(request, 'songs.html', context={ "songs" : all_songs, "album" : album})
 
 def song_artist_view(request, album_name):	
 	all_songs = HindiSong.objects.filter(artist=album_name)

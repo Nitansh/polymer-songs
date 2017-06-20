@@ -1,19 +1,17 @@
-from django.shortcuts import render
-from GrabHindiSongs.models import HindiSongAlbum, HindiSong
 from django.views.decorators.cache import cache_page
+from django.shortcuts import render
+from django.views.generic.list import ListView
+
+from GrabHindiSongs.models import HindiSongAlbum, HindiSong
+
 
 @cache_page(24 * 60 * 60 * 60)
 def home_view(request):
    return render(request, 'index.html');
 
-@cache_page(30 * 24 * 60 * 60 * 60)
-def google_view(request):
-	context = {}
-	albums = HindiSongAlbum.objects.all()
-	
-	for album in albums:
-		context[album] = HindiSong.objects.filter(album = album)
-
-
-
-	return render(request,'index-google.html', {'context' : context })
+class SongsListView(ListView):
+    model = HindiSongAlbum
+    template_name = 'index-google.html' 
+    context_object_name = 'albums'  
+    paginate_by = 10
+    queryset = HindiSongAlbum.objects.all()[::-1]  # Default: Model.objects.all() 

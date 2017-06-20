@@ -24,7 +24,7 @@ from .views import home_view, SongsListView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',home_view),
-    url(r'^allsongs$', SongsListView.as_view()),
+    url(r'^allsongs', SongsListView.as_view()),
     url(r'^albumHindi/', include('GrabHindiSongs.urls')),
     url(r'^albumPanjabi/', include('GrabPanjabiSongs.urls')),
     url(r'^robots.txt$', TemplateView.as_view(template_name="robots.txt", content_type="text/plain"), name="robots_file"),

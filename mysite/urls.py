@@ -24,9 +24,10 @@ from .views import home_view, SongsListView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',home_view),
-    url(r'^allsongs', SongsListView.as_view()),
+    url(r'^allsongs/$', SongsListView.as_view()),
     url(r'^albumHindi/', include('GrabHindiSongs.urls')),
     url(r'^albumPanjabi/', include('GrabPanjabiSongs.urls')),
     url(r'^robots.txt$', TemplateView.as_view(template_name="robots.txt", content_type="text/plain"), name="robots_file"),
     url(r'^sitemap.xml$', TemplateView.as_view(template_name="sitemap.xml", content_type="xml"), name="siteMap_file"),
+    url(r'^allsongs/sitemap.xml$', TemplateView.as_view(template_name="sitemap.xml", content_type="xml"), name="siteMap_file"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
